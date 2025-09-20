@@ -1,191 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corporate Server Infrastructure & Business Continuity Plan</title>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Infrastructure & Business Continuity Plan</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://img.freepik.com/free-vector/data-storage-clouds_1284-32729.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #212121;
+            display: flex;
+            justify-content: center;
+            padding: 80px 40px;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            line-height: 1.6;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85); /* Overlay for readability */
+            z-index: -1;
+        }
+        .header {
+            background: linear-gradient(to right, #0078d4, #005a9e);
+            color: #ffffff;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 80px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .header h1 {
+            font-size: 3.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .header p {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+        .executive-summary {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 1200px;
+        }
+        .executive-summary h2 {
+            font-size: 1.9em;
+            color: #0078d4;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .executive-summary p {
+            font-size: 1.15em;
+            color: #424242;
+            margin-bottom: 25px;
+        }
+        .executive-summary ul {
+            list-style-type: disc;
+            padding-left: 30px;
+            font-size: 1.15em;
+            color: #424242;
+        }
+        .flowchart-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 1;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .section:hover {
+            box-shadow: 0 8px 35px rgba(0, 120, 212, 0.2);
+            transform: translateY(-5px);
+        }
+        .section-title {
+            color: #0078d4;
+            font-weight: 600;
+            font-size: 1.7em;
+            margin: 0 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0078d4;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: '■';
+            margin-right: 15px;
+            color: #0078d4;
+            font-size: 1.3em;
+        }
+        .node-grid {
+            display: grid;
+            gap: 35px;
+        }
+        .two-col { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+        .three-col { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        .four-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .node {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 6px solid #0078d4;
+            border-radius: 8px;
+            padding: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+        .node:hover {
+            box-shadow: 0 4px 20px rgba(0, 120, 212, 0.15);
+        }
+        .node h3 {
+            margin: 0 0 25px 0;
+            color: #212121;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        .node ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            font-size: 1.05em;
+            color: #424242;
+        }
+        .node li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .label {
+            font-weight: 600;
+            color: #212121;
+            display: inline-block;
+            width: 120px;
+        }
+        .value {
+            color: #616161;
+        }
+        .arrow-connector {
+            text-align: center;
+            font-size: 4em;
+            color: #bdbdbd;
+            transition: color 0.3s ease;
+        }
+        .arrow-connector:hover {
+            color: #0078d4;
+        }
+        /* Specific Node Colors for Status/Type */
+        .backup-primary { border-left-color: #28a745; }
+        .backup-secondary { border-left-color: #ffc107; }
+        .backup-nas { border-left-color: #17a2b8; }
+        .backup-offsite { border-left-color: #6f42c1; }
+        .dr-workflow { border-left-color: #dc3545; }
+        .future-state { border-left-color: #6f42c1; }
+        .appendix-section { border-left-color: #17a2b8; }
+        .section-title.appendix::before { color: #17a2b8; }
 
-    body {
-        font-family: 'Lato', sans-serif;
-        background-color: #f4f7fa;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        padding: 40px;
-        flex-direction: column;
-        align-items: center;
-    }
-    .header-title {
-        text-align: center;
-        margin-bottom: 50px;
-    }
-    .header-title h1 {
-        font-size: 2.2em;
-        color: #1c3d5a;
-        margin-bottom: 5px;
-    }
-    .header-title p {
-        font-size: 1.1em;
-        color: #5a7b9a;
-        margin-top: 0;
-    }
-    .flowchart-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 25px;
-        width: 100%;
-        max-width: 1200px;
-    }
-    .section {
-        background-color: #ffffff;
-        border: 1px solid #dde6ed;
-        border-radius: 8px;
-        padding: 25px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    }
-    .section-title {
-        color: #1c3d5a;
-        font-weight: 700;
-        font-size: 1.3em;
-        margin: 0 0 20px 0;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #007bff;
-        display: flex;
-        align-items: center;
-    }
-    .section-title::before {
-        content: '■';
-        margin-right: 10px;
-        color: #007bff;
-    }
-    .node-grid {
-        display: grid;
-        gap: 20px;
-    }
-    .two-col { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    .three-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-
-    .node {
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-left: 4px solid #007bff;
-        border-radius: 6px;
-        padding: 20px;
-        transition: box-shadow 0.3s;
-    }
-    .node:hover {
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    }
-    .node h3 {
-        margin: 0 0 15px 0;
-        color: #1c3d5a;
-        font-size: 1.1em;
-    }
-    .node ul {
-        list-style-type: none;
-        padding-left: 0;
-        margin: 0;
-        font-size: 0.95em;
-        color: #495057;
-    }
-    .node li {
-        margin-bottom: 10px;
-        line-height: 1.5;
-    }
-    .label {
-        font-weight: 700;
-        color: #343a40;
-        display: inline-block;
-        width: 85px;
-    }
-    .value {
-        color: #5a7b9a;
-    }
-    .arrow-connector {
-        text-align: center;
-        font-size: 2em;
-        color: #adb5bd;
-    }
-    /* Specific Node Colors for Status/Type */
-    .backup-primary { border-left-color: #28a745; }
-    .backup-secondary { border-left-color: #ffc107; }
-    .dr-workflow { border-left-color: #dc3545; }
-    .future-state { border-left-color: #6f42c1; }
-    .appendix-section { border-left-color: #17a2b8; }
-    .section-title.appendix::before { color: #17a2b8; }
-
-
-    /* Accordion Styles */
-    .accordion-button {
-        background-color: #e9ecef;
-        color: #1c3d5a;
-        cursor: pointer;
-        padding: 15px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 1.1em;
-        font-weight: 700;
-        transition: background-color 0.3s;
-        border-radius: 5px;
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .accordion-button:hover {
-        background-color: #dde6ed;
-    }
-    .accordion-button::after {
-        content: '+';
-        font-size: 1.5em;
-        color: #007bff;
-    }
-    .accordion-button.active::after {
-        content: '−';
-    }
-    .panel {
-        padding: 0 18px;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        border-left: 1px solid #dde6ed;
-        border-right: 1px solid #dde6ed;
-        border-bottom: 1px solid #dde6ed;
-    }
-    .panel p, .panel ul {
-        font-size: 0.95em;
-        line-height: 1.6;
-        color: #495057;
-    }
-    .panel h4 {
-        color: #1c3d5a;
-        margin-top: 15px;
-    }
-    .panel ul {
-        list-style-type: disc;
-        padding-left: 20px;
-    }
-
-</style>
+        /* Accordion Styles */
+        .accordion-button {
+            background: #f9f9f9;
+            color: #212121;
+            cursor: pointer;
+            padding: 25px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.3em;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .accordion-button:hover {
+            background: #e8e8e8;
+        }
+        .accordion-button::after {
+            content: '+';
+            font-size: 2em;
+            color: #0078d4;
+        }
+        .accordion-button.active::after {
+            content: '−';
+        }
+        .panel {
+            padding: 0 25px;
+            background: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .panel p, .panel ul {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #424242;
+            margin: 25px 0;
+        }
+        .panel h4 {
+            color: #212121;
+            margin-top: 30px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+        .panel ul {
+            list-style-type: disc;
+            padding-left: 30px;
+        }
+        .panel li strong {
+            color: #212121;
+        }
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            font-size: 1em;
+            color: #757575;
+            width: 100%;
+            max-width: 1200px;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="header-title">
+    <div class="header">
         <h1>Server Infrastructure & Business Continuity Plan</h1>
-        <p>A detailed overview of the current environment, recovery protocols, and future strategy.</p>
+        <p>A comprehensive strategy for ensuring resilience, security, and future-readiness of critical systems as of September 20, 2025.</p>
+    </div>
+
+    <div class="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>This document outlines a robust business continuity plan for our server infrastructure, focusing on high availability, rapid recovery, and strategic modernization. Key highlights include:</p>
+        <ul>
+            <li>Dual-layered backup systems with on-site and off-site redundancy to minimize downtime.</li>
+            <li>Disaster recovery protocols leveraging Microsoft Hyper-V for failover in under 3 hours.</li>
+            <li>Planned migration to Windows Server 2025 for enhanced security and performance.</li>
+            <li>Comprehensive protection for core services including Active Directory, Sage Pastel, Email, POS, and Time Manager.</li>
+        </ul>
+        <p>This approach ensures operational continuity, mitigates risks, and positions the organization for long-term scalability.</p>
     </div>
 
     <div class="flowchart-container">
         <div class="section">
             <h2 class="section-title">Core Infrastructure Overview</h2>
             <div class="node-grid two-col">
-                <div class="node"><h3>Server: SCCMAIN</h3><ul><li><span class="label">Role:</span> <span class="value">Primary Domain Controller</span></li><li><span class="label">Services:</span> <span class="value">Active Directory, Sage Pastel, Email</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li></ul></div>
-                <div class="node"><h3>Server: EYETHU1</h3><ul><li><span class="label">Role:</span> <span class="value">Line-of-Business Server</span></li><li><span class="label">Services:</span> <span class="value">Point of Sale (POS), Time Manager</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li></ul></div>
+                <div class="node"><h3>Server: SCCMAIN</h3><ul><li><span class="label">Role:</span> <span class="value">Primary Domain Controller</span></li><li><span class="label">Services:</span> <span class="value">Active Directory, Sage Pastel, Email Storage</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Criticality:</span> <span class="value">High - Central to authentication and financial operations</span></li></ul></div>
+                <div class="node"><h3>Server: EYETHU1</h3><ul><li><span class="label">Role:</span> <span class="value">Line-of-Business Server</span></li><li><span class="label">Services:</span> <span class="value">Point of Sale (POS), Time Manager</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Criticality:</span> <span class="value">High - Essential for retail and HR functions</span></li></ul></div>
             </div>
         </div>
         
@@ -193,9 +283,11 @@
         
         <div class="section">
             <h2 class="section-title">Data Protection Strategy</h2>
-            <div class="node-grid two-col">
-                <div class="node backup-primary"><h3>Primary Backup: Disk2VHD</h3><ul><li><span class="label">Method:</span> <span class="value">Bare-Metal System Imaging (P2V)</span></li><li><span class="label">Output:</span> <span class="value">Virtual Hard Disk (.vhdx)</span></li><li><span class="label">Purpose:</span> <span class="value">Rapid system virtualization for DR</span></li></ul></div>
-                <div class="node backup-secondary"><h3>Secondary Backup: Veritas</h3><ul><li><span class="label">Method:</span> <span class="value">System State & File-Level Backup</span></li><li><span class="label">Output:</span> <span class="value">Proprietary Backup Set</span></li><li><span class="label">Purpose:</span> <span class="value">Redundancy and granular restore</span></li></ul></div>
+            <div class="node-grid four-col">
+                <div class="node backup-primary"><h3>Primary Backup: Disk2VHD</h3><ul><li><span class="label">Method:</span> <span class="value">Bare-Metal System Imaging (P2V)</span></li><li><span class="label">Output:</span> <span class="value">Virtual Hard Disk (.vhdx)</span></li><li><span class="label">Purpose:</span> <span class="value">Rapid system virtualization for DR</span></li><li><span class="label">Storage:</span> <span class="value">Securely on IT PC’s hard drive</span></li><li><span class="label">Frequency:</span> <span class="value">Daily full images</span></li></ul></div>
+                <div class="node backup-secondary"><h3>Secondary Backup: Veritas</h3><ul><li><span class="label">Method:</span> <span class="value">System State & File-Level Backup</span></li><li><span class="label">Output:</span> <span class="value">Proprietary Backup Set</span></li><li><span class="label">Purpose:</span> <span class="value">Redundancy and granular restore</span></li><li><span class="label">Frequency:</span> <span class="value">Incremental hourly, full daily</span></li></ul></div>
+                <div class="node backup-nas"><h3>Veritas Storage: NAS Synology</h3><ul><li><span class="label">Role:</span> <span class="value">Centralized storage for all Veritas backups</span></li><li><span class="label">Purpose:</span> <span class="value">On-site high-availability storage</span></li><li><span class="label">Advantage:</span> <span class="value">Scalable, RAID-protected, easy management</span></li><li><span class="label">Capacity:</span> <span class="value">Multi-TB with expansion options</span></li></ul></div>
+                <div class="node backup-offsite"><h3>Offsite Mirroring</h3><ul><li><span class="label">Method:</span> <span class="value">Real-time mirroring of NAS Synology to secure offsite location</span></li><li><span class="label">Purpose:</span> <span class="value">Protection against site-wide disasters</span></li><li><span class="label">Advantage:</span> <span class="value">Geographic redundancy, compliance-ready</span></li><li><span class="label">Security:</span> <span class="value">Encrypted transmission and storage</span></li></ul></div>
             </div>
         </div>
 
@@ -204,9 +296,9 @@
         <div class="section">
             <h2 class="section-title dr-workflow">Disaster Recovery Protocol (Hardware Failure Scenario)</h2>
             <div class="node-grid three-col">
-                <div class="node dr-workflow"><h3>Step 1: Failover Initiation</h3><ul><li><span class="label">Trigger:</span> <span class="value">Physical server outage confirmed.</span></li><li><span class="label">Action:</span> <span class="value">Copy latest .vhdx to Hyper-V host.</span></li><li><span class="label">Time Est:</span> <span class="value">1–3 hours</span></li></ul></div>
-                <div class="node dr-workflow"><h3>Step 2: Service Restoration</h3><ul><li><span class="label">Platform:</span> <span class="value">Microsoft Hyper-V</span></li><li><span class="label">Action:</span> <span class="value">Launch new VM from .vhdx backup.</span></li><li><span class="label">Time Est:</span> <span class="value">< 5 minutes</span></li></ul></div>
-                <div class="node dr-workflow"><h3>Step 3: Failback Procedure</h3><ul><li><span class="label">Timing:</span> <span class="value">Post-business hours</span></li><li><span class="label">Action:</span> <span class="value">Migrate data from VM to repaired hardware.</span></li><li><span class="label">Goal:</span> <span class="value">Return to primary physical infrastructure.</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 1: Failover Initiation</h3><ul><li><span class="label">Trigger:</span> <span class="value">Confirmed physical server outage</span></li><li><span class="label">Action:</span> <span class="value">Copy latest .vhdx to Hyper-V host; fallback to Veritas/NAS/offsite if needed</span></li><li><span class="label">Time Est:</span> <span class="value">1–3 hours (data size dependent)</span></li><li><span class="label">Responsible:</span> <span class="value">IT Operations Team</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 2: Service Restoration</h3><ul><li><span class="label">Platform:</span> <span class="value">Microsoft Hyper-V</span></li><li><span class="label">Action:</span> <span class="value">Launch VM from .vhdx or restore from Veritas/NAS/offsite</span></li><li><span class="label">Time Est:</span> <span class="value">< 5 minutes post-data transfer</span></li><li><span class="label">Validation:</span> <span class="value">Service health checks</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 3: Failback Procedure</h3><ul><li><span class="label">Timing:</span> <span class="value">Post-business hours to minimize impact</span></li><li><span class="label">Action:</span> <span class="value">Migrate data from VM back to repaired physical hardware</span></li><li><span class="label">Goal:</span> <span class="value">Seamless return to primary infrastructure</span></li><li><span class="label">Testing:</span> <span class="value">Post-failback integrity verification</span></li></ul></div>
             </div>
         </div>
 
@@ -214,8 +306,9 @@
 
         <div class="section">
             <h2 class="section-title future-state">Future Modernization Plan</h2>
-            <div class="node-grid">
-                <div class="node future-state"><h3>Infrastructure Upgrade Path</h3><ul><li><span class="label">Current OS:</span> <span class="value">Windows Server 2012 R2 (End-of-Support)</span></li><li><span class="label">Target OS:</span> <span class="value">Windows Server 2025</span></li><li><span class="label">Strategy:</span> <span class="value">Utilize Microsoft Server Migration Tools for a tested and verified transition.</span></li><li><span class="label">Benefits:</span> <span class="value">Improved security, enhanced performance, and long-term vendor support.</span></li></ul></div>
+            <div class="node-grid two-col">
+                <div class="node future-state"><h3>Infrastructure Upgrade Path</h3><ul><li><span class="label">Current OS:</span> <span class="value">Windows Server 2012 R2 (End-of-Support)</span></li><li><span class="label">Target OS:</span> <span class="value">Windows Server 2025</span></li><li><span class="label">Strategy:</span> <span class="value">Leverage Microsoft Server Migration Tools for phased, tested transition</span></li><li><span class="label">Timeline:</span> <span class="value">Q4 2025 - Q1 2026</span></li><li><span class="label">Benefits:</span> <span class="value">Advanced security features, improved performance, extended support lifecycle</span></li></ul></div>
+                <div class="node future-state"><h3>Additional Enhancements</h3><ul><li><span class="label">Cloud Integration:</span> <span class="value">Hybrid Azure setup for scalability</span></li><li><span class="label">Monitoring:</span> <span class="value">Implement Azure Monitor and Sentinel</span></li><li><span class="label">Automation:</span> <span class="value">PowerShell scripting for backups and DR</span></li><li><span class="label">Compliance:</span> <span class="value">Align with ISO 27001 and GDPR standards</span></li><li><span class="label">Cost Savings:</span> <span class="value">Optimized resource utilization</span></li></ul></div>
             </div>
         </div>
         
@@ -226,16 +319,18 @@
             
             <button class="accordion-button">1. Current Infrastructure</button>
             <div class="panel">
-                <p>Both servers are critical to daily business operations and are protected with multiple layers of backup and recovery options.</p>
+                <p>Our current setup comprises two mission-critical servers, each protected by hardware redundancy and multi-tiered backups to ensure operational integrity.</p>
                 <h4>SCCMAIN</h4>
                 <ul>
-                    <li><strong>Functions:</strong> Active Directory, Sage Pastel, and Email Storage</li>
-                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock)</li>
+                    <li><strong>Functions:</strong> Active Directory for user authentication, Sage Pastel for financial management, and Email Storage for communications.</li>
+                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock) for fault tolerance.</li>
+                    <li><strong>Dependencies:</strong> Integrates with network services and client workstations.</li>
                 </ul>
                 <h4>EYETHU1</h4>
                 <ul>
-                    <li><strong>Functions:</strong> Point of Sale & Time Manager</li>
-                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock)</li>
+                    <li><strong>Functions:</strong> Point of Sale (POS) for transactions and Time Manager for employee scheduling.</li>
+                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock) for data protection.</li>
+                    <li><strong>Dependencies:</strong> Connected to retail terminals and HR systems.</li>
                 </ul>
             </div>
 
@@ -243,26 +338,30 @@
             <div class="panel">
                 <h4>Primary Backup Method – Disk2VHD</h4>
                 <ul>
-                    <li><strong>Process:</strong> Full system images of SCCMAIN and EYETHU1 are created using Disk2VHD. Backup files (.vhdx) are stored securely on the IT PC’s hard drive. Backups are ready to be mounted and run in Microsoft Hyper-V in the event of hardware failure.</li>
-                    <li><strong>Recovery Time (SCCMAIN):</strong> 2–3 hours to copy data + 5 minutes to launch in Hyper-V.</li>
-                    <li><strong>Recovery Time (EYETHU1):</strong> 1 hour to copy data + 5 minutes to launch in Hyper-V.</li>
-                    <li><strong>Failover Plan:</strong> If a physical server fails, operations are resumed quickly in Hyper-V using the latest .vhdx backup. After store closing, Hyper-V data is migrated back to a physical drive and restored to the original server hardware.</li>
+                    <li><strong>Process:</strong> Creates full system images of SCCMAIN and EYETHU1, stored as .vhdx files on the IT PC’s hard drive, ready for Hyper-V deployment.</li>
+                    <li><strong>Recovery Time (SCCMAIN):</strong> 2–3 hours data copy + 5 minutes launch in Hyper-V.</li>
+                    <li><strong>Recovery Time (EYETHU1):</strong> 1 hour data copy + 5 minutes launch in Hyper-V.</li>
+                    <li><strong>Failover Plan:</strong> Quick resumption in Hyper-V; post-hours migration back to physical hardware.</li>
+                    <li><strong>Testing:</strong> Quarterly simulations to validate integrity.</li>
                 </ul>
                 <h4>Secondary Backup Method – Veritas Backup</h4>
                 <ul>
-                    <li><strong>Role:</strong> Provides an additional safety net.</li>
-                    <li><strong>Usage:</strong> If the Disk2VHD process fails, Veritas Backup can be used to recover system data and files.</li>
-                    <li><strong>Advantage:</strong> Ensures business continuity through redundancy.</li>
+                    <li><strong>Role:</strong> Additional layer for system and file recovery.</li>
+                    <li><strong>Usage:</strong> Fallback if Disk2VHD unavailable.</li>
+                    <li><strong>Advantage:</strong> Granular restores and redundancy.</li>
+                    <li><strong>Storage:</strong> Backed to NAS Synology with offsite mirroring for ultimate protection.</li>
+                    <li><strong>Retention Policy:</strong> 30 days on-site, 90 days off-site.</li>
                 </ul>
             </div>
 
             <button class="accordion-button">3. Disaster Recovery Benefits</button>
             <div class="panel">
                  <ul>
-                    <li><strong>Minimal Downtime:</strong> Failover to Hyper-V allows rapid recovery (within minutes once data is copied).</li>
-                    <li><strong>Redundancy:</strong> Dual backup systems (Disk2VHD + Veritas).</li>
-                    <li><strong>Flexibility:</strong> Backups are hypervisor-ready and can be restored to both virtual and physical environments.</li>
-                    <li><strong>Business Continuity:</strong> Ensures core services (Active Directory, Pastel, POS, Time Manager, and Email) remain operational with minimal interruption.</li>
+                    <li><strong>Minimal Downtime:</strong> Hyper-V failover enables recovery in minutes after data transfer.</li>
+                    <li><strong>Redundancy:</strong> Multi-tiered (Disk2VHD + Veritas + NAS + Offsite) for comprehensive coverage.</li>
+                    <li><strong>Flexibility:</strong> Supports virtual and physical restores across environments.</li>
+                    <li><strong>Business Continuity:</strong> Maintains operations for essential services with RTO < 3 hours and RPO < 1 hour.</li>
+                    <li><strong>Risk Mitigation:</strong> Addresses hardware failures, data corruption, and site disasters.</li>
                 </ul>
             </div>
             
@@ -270,32 +369,48 @@
             <div class="panel">
                 <h4>Server Upgrade</h4>
                 <ul>
-                    <li><strong>Current servers are running Windows Server 2012 R2.</strong></li>
-                    <li><strong>Planned upgrade path:</strong> Migration to Windows Server 2025.</li>
-                    <li><strong>Testing is underway</strong> using Microsoft’s built-in Server Migration Tools.</li>
-                    <li><strong>Benefits:</strong> Enhanced performance, stronger security, and longer support lifecycle.</li>
+                    <li><strong>Current State:</strong> Windows Server 2012 R2 – Approaching end-of-support.</li>
+                    <li><strong>Planned Path:</strong> Migration to Windows Server 2025 using Microsoft tools.</li>
+                    <li><strong>Testing:</strong> Ongoing in lab environment; full rollout post-validation.</li>
+                    <li><strong>Benefits:</strong> Superior security (e.g., enhanced encryption), performance optimizations, and support until 2035.</li>
+                    <li><strong>Next Steps:</strong> Pilot migration Q4 2025; full deployment Q1 2026.</li>
                 </ul>
+            </div>
+
+            <button class="accordion-button">5. Summary & Recommendations</button>
+            <div class="panel">
+                <p>This plan provides a resilient framework for our infrastructure, combining immediate protection with strategic upgrades.</p>
+                <ul>
+                    <li><strong>Immediate Actions:</strong> Conduct DR drill in Q4 2025.</li>
+                    <li><strong>Recommendations:</strong> Explore Azure Backup integration for hybrid cloud resilience.</li>
+                    <li><strong>Investment Justification:</strong> Reduces potential downtime costs (estimated $50K/hour) and ensures compliance.</li>
+                </ul>
+                <p>For questions or further details, contact the IT Manager (Tahir).</p>
             </div>
 
         </div>
     </div>
 
-<script>
-    var acc = document.getElementsByClassName("accordion-button");
-    var i;
+    <footer>
+        <p>Prepared for Superb Hyper Review | Confidential | As of September 20, 2025</p>
+    </footer>
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            } 
-        });
-    }
-</script>
+    <script>
+        var acc = document.getElementsByClassName("accordion-button");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
 
 </body>
 </html>
