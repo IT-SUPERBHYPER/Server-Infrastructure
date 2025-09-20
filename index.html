@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Infrastructure & Business Continuity Plan</title>
+    <title>Server Infrastructure & Business Continuity Setup</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap">
     <style>
         body {
@@ -120,8 +120,8 @@
             display: grid;
             gap: 35px;
         }
-        .two-col { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
-        .three-col { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        .two-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .three-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .four-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .node {
             background: #f9f9f9;
@@ -249,112 +249,227 @@
             width: 100%;
             max-width: 1200px;
         }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 20px;
+            }
+            .header {
+                padding: 40px 20px;
+                margin-bottom: 40px;
+            }
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .header p {
+                font-size: 1.2em;
+            }
+            .executive-summary {
+                padding: 30px;
+                margin-bottom: 40px;
+            }
+            .executive-summary h2 {
+                font-size: 1.6em;
+            }
+            .executive-summary p, .executive-summary ul {
+                font-size: 1em;
+            }
+            .flowchart-container {
+                gap: 30px;
+            }
+            .section {
+                padding: 30px;
+            }
+            .section-title {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            .node-grid {
+                gap: 20px;
+            }
+            .two-col, .three-col, .four-col {
+                grid-template-columns: 1fr; /* Force single column on mobile */
+            }
+            .node {
+                padding: 20px;
+            }
+            .node h3 {
+                font-size: 1.2em;
+            }
+            .node ul {
+                font-size: 1em;
+            }
+            .label {
+                width: 100px; /* Adjust for smaller screens */
+            }
+            .arrow-connector {
+                font-size: 3em;
+            }
+            .accordion-button {
+                padding: 20px;
+                font-size: 1.2em;
+            }
+            .accordion-button::after {
+                font-size: 1.5em;
+            }
+            .panel {
+                padding: 0 20px;
+            }
+            .panel p, .panel ul {
+                font-size: 1em;
+                margin: 20px 0;
+            }
+            .panel h4 {
+                font-size: 1.1em;
+            }
+            footer {
+                margin-top: 40px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 30px 15px;
+            }
+            .header {
+                padding: 30px 15px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .header p {
+                font-size: 1em;
+            }
+            .executive-summary {
+                padding: 20px;
+            }
+            .section {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.3em;
+            }
+            .node {
+                padding: 15px;
+            }
+            .label {
+                width: auto;
+                display: block; /* Stack labels on very small screens */
+                margin-bottom: 5px;
+            }
+            .accordion-button {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Server Infrastructure & Business Continuity Plan</h1>
-        <p>A comprehensive strategy for ensuring resilience, security, and future-readiness of critical systems as of September 20, 2025.</p>
+        <h1>Server Infrastructure & Business Continuity Setup</h1>
+        <p>Our current resilient infrastructure ensuring security and business continuity as of September 20, 2025.</p>
     </div>
 
     <div class="executive-summary">
-        <h2>Executive Summary</h2>
-        <p>This document outlines a robust business continuity plan for our server infrastructure, focusing on high availability, rapid recovery, and strategic modernization. Key highlights include:</p>
+        <h2>Infrastructure Overview</h2>
+        <p>Our organization operates a robust business continuity infrastructure with high availability, rapid recovery capabilities, and strategic modernization planning. Current implementation includes:</p>
         <ul>
-            <li>Dual-layered backup systems with on-site and off-site redundancy to minimize downtime.</li>
-            <li>Disaster recovery protocols leveraging Microsoft Hyper-V for failover in under 3 hours.</li>
-            <li>Planned migration to Windows Server 2025 for enhanced security and performance.</li>
-            <li>Comprehensive protection for core services including Active Directory, Sage Pastel, Email, POS, and Time Manager.</li>
+            <li>Dual-layered backup systems with on-site and off-site redundancy ensuring minimal downtime.</li>
+            <li>Disaster recovery protocols using Microsoft Hyper-V with recovery capabilities under 3 hours.</li>
+            <li>Protection for core services including Active Directory, Sage Pastel, Email, POS, and Time Manager.</li>
+            <li>Modernization roadmap targeting Windows Server 2025 for enhanced security and performance.</li>
         </ul>
-        <p>This approach ensures operational continuity, mitigates risks, and positions the organization for long-term scalability.</p>
+        <p>This infrastructure ensures operational continuity, mitigates risks, and positions us for long-term scalability.</p>
     </div>
 
     <div class="flowchart-container">
         <div class="section">
-            <h2 class="section-title">Core Infrastructure Overview</h2>
+            <h2 class="section-title">Current Infrastructure</h2>
             <div class="node-grid two-col">
-                <div class="node"><h3>Server: SCCMAIN</h3><ul><li><span class="label">Role:</span> <span class="value">Primary Domain Controller</span></li><li><span class="label">Services:</span> <span class="value">Active Directory, Sage Pastel, Email Storage</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Criticality:</span> <span class="value">High - Central to authentication and financial operations</span></li></ul></div>
-                <div class="node"><h3>Server: EYETHU1</h3><ul><li><span class="label">Role:</span> <span class="value">Line-of-Business Server</span></li><li><span class="label">Services:</span> <span class="value">Point of Sale (POS), Time Manager</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Criticality:</span> <span class="value">High - Essential for retail and HR functions</span></li></ul></div>
+                <div class="node"><h3>Server: SCCMAIN</h3><ul><li><span class="label">Role:</span> <span class="value">Primary Domain Controller</span></li><li><span class="label">Services:</span> <span class="value">Active Directory, Sage Pastel, Email Storage</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Status:</span> <span class="value">Production - Central to authentication and financial operations</span></li></ul></div>
+                <div class="node"><h3>Server: EYETHU1</h3><ul><li><span class="label">Role:</span> <span class="value">Line-of-Business Server</span></li><li><span class="label">Services:</span> <span class="value">Point of Sale (POS), Time Manager</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li><li><span class="label">Status:</span> <span class="value">Production - Essential for retail and HR functions</span></li></ul></div>
             </div>
         </div>
         
         <div class="arrow-connector">▼</div>
         
         <div class="section">
-            <h2 class="section-title">Data Protection Strategy</h2>
+            <h2 class="section-title">Data Protection Implementation</h2>
             <div class="node-grid four-col">
-                <div class="node backup-primary"><h3>Primary Backup: Disk2VHD</h3><ul><li><span class="label">Method:</span> <span class="value">Bare-Metal System Imaging (P2V)</span></li><li><span class="label">Output:</span> <span class="value">Virtual Hard Disk (.vhdx)</span></li><li><span class="label">Purpose:</span> <span class="value">Rapid system virtualization for DR</span></li><li><span class="label">Storage:</span> <span class="value">Securely on IT PC’s hard drive</span></li><li><span class="label">Frequency:</span> <span class="value">Daily full images</span></li></ul></div>
-                <div class="node backup-secondary"><h3>Secondary Backup: Veritas</h3><ul><li><span class="label">Method:</span> <span class="value">System State & File-Level Backup</span></li><li><span class="label">Output:</span> <span class="value">Proprietary Backup Set</span></li><li><span class="label">Purpose:</span> <span class="value">Redundancy and granular restore</span></li><li><span class="label">Frequency:</span> <span class="value">Incremental hourly, full daily</span></li></ul></div>
-                <div class="node backup-nas"><h3>Veritas Storage: NAS Synology</h3><ul><li><span class="label">Role:</span> <span class="value">Centralized storage for all Veritas backups</span></li><li><span class="label">Purpose:</span> <span class="value">On-site high-availability storage</span></li><li><span class="label">Advantage:</span> <span class="value">Scalable, RAID-protected, easy management</span></li><li><span class="label">Capacity:</span> <span class="value">Multi-TB with expansion options</span></li></ul></div>
-                <div class="node backup-offsite"><h3>Offsite Mirroring</h3><ul><li><span class="label">Method:</span> <span class="value">Real-time mirroring of NAS Synology to secure offsite location</span></li><li><span class="label">Purpose:</span> <span class="value">Protection against site-wide disasters</span></li><li><span class="label">Advantage:</span> <span class="value">Geographic redundancy, compliance-ready</span></li><li><span class="label">Security:</span> <span class="value">Encrypted transmission and storage</span></li></ul></div>
+                <div class="node backup-primary"><h3>Primary Backup: Disk2VHD</h3><ul><li><span class="label">Method:</span> <span class="value">Bare-Metal System Imaging (P2V)</span></li><li><span class="label">Output:</span> <span class="value">Virtual Hard Disk (.vhdx)</span></li><li><span class="label">Purpose:</span> <span class="value">Rapid system virtualization for DR</span></li><li><span class="label">Storage:</span> <span class="value">IT PC's hard drive (secure)</span></li><li><span class="label">Schedule:</span> <span class="value">Daily full images</span></li></ul></div>
+                <div class="node backup-secondary"><h3>Secondary Backup: Veritas</h3><ul><li><span class="label">Method:</span> <span class="value">System State & File-Level Backup</span></li><li><span class="label">Output:</span> <span class="value">Proprietary Backup Set</span></li><li><span class="label">Purpose:</span> <span class="value">Redundancy and granular restore</span></li><li><span class="label">Schedule:</span> <span class="value">Incremental hourly, full daily</span></li></ul></div>
+                <div class="node backup-nas"><h3>Veritas Storage: NAS Synology</h3><ul><li><span class="label">Role:</span> <span class="value">Centralized storage for all Veritas backups</span></li><li><span class="label">Function:</span> <span class="value">On-site high-availability storage</span></li><li><span class="label">Features:</span> <span class="value">Scalable, RAID-protected, easy management</span></li><li><span class="label">Capacity:</span> <span class="value">Multi-TB with expansion options</span></li></ul></div>
+                <div class="node backup-offsite"><h3>Offsite Mirroring</h3><ul><li><span class="label">Method:</span> <span class="value">Real-time mirroring of NAS Synology to secure offsite location</span></li><li><span class="label">Function:</span> <span class="value">Protection against site-wide disasters</span></li><li><span class="label">Benefits:</span> <span class="value">Geographic redundancy, compliance-ready</span></li><li><span class="label">Security:</span> <span class="value">Encrypted transmission and storage</span></li></ul></div>
             </div>
         </div>
 
         <div class="arrow-connector">▼</div>
 
         <div class="section">
-            <h2 class="section-title dr-workflow">Disaster Recovery Protocol (Hardware Failure Scenario)</h2>
+            <h2 class="section-title dr-workflow">Disaster Recovery Procedures</h2>
             <div class="node-grid three-col">
-                <div class="node dr-workflow"><h3>Step 1: Failover Initiation</h3><ul><li><span class="label">Trigger:</span> <span class="value">Confirmed physical server outage</span></li><li><span class="label">Action:</span> <span class="value">Copy latest .vhdx to Hyper-V host; fallback to Veritas/NAS/offsite if needed</span></li><li><span class="label">Time Est:</span> <span class="value">1–3 hours (data size dependent)</span></li><li><span class="label">Responsible:</span> <span class="value">IT Operations Team</span></li></ul></div>
-                <div class="node dr-workflow"><h3>Step 2: Service Restoration</h3><ul><li><span class="label">Platform:</span> <span class="value">Microsoft Hyper-V</span></li><li><span class="label">Action:</span> <span class="value">Launch VM from .vhdx or restore from Veritas/NAS/offsite</span></li><li><span class="label">Time Est:</span> <span class="value">< 5 minutes post-data transfer</span></li><li><span class="label">Validation:</span> <span class="value">Service health checks</span></li></ul></div>
-                <div class="node dr-workflow"><h3>Step 3: Failback Procedure</h3><ul><li><span class="label">Timing:</span> <span class="value">Post-business hours to minimize impact</span></li><li><span class="label">Action:</span> <span class="value">Migrate data from VM back to repaired physical hardware</span></li><li><span class="label">Goal:</span> <span class="value">Seamless return to primary infrastructure</span></li><li><span class="label">Testing:</span> <span class="value">Post-failback integrity verification</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 1: Failover Initiation</h3><ul><li><span class="label">Trigger:</span> <span class="value">Confirmed physical server outage</span></li><li><span class="label">Process:</span> <span class="value">Copy latest .vhdx to Hyper-V host; fallback to Veritas/NAS/offsite if needed</span></li><li><span class="label">Time:</span> <span class="value">1–3 hours (data size dependent)</span></li><li><span class="label">Owner:</span> <span class="value">IT Operations Team</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 2: Service Restoration</h3><ul><li><span class="label">Platform:</span> <span class="value">Microsoft Hyper-V</span></li><li><span class="label">Process:</span> <span class="value">Launch VM from .vhdx or restore from Veritas/NAS/offsite</span></li><li><span class="label">Time:</span> <span class="value">< 5 minutes post-data transfer</span></li><li><span class="label">Validation:</span> <span class="value">Service health checks</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 3: Failback Process</h3><ul><li><span class="label">Timing:</span> <span class="value">Post-business hours to minimize impact</span></li><li><span class="label">Process:</span> <span class="value">Migrate data from VM back to repaired physical hardware</span></li><li><span class="label">Objective:</span> <span class="value">Seamless return to primary infrastructure</span></li><li><span class="label">Testing:</span> <span class="value">Post-failback integrity verification</span></li></ul></div>
             </div>
         </div>
 
         <div class="arrow-connector">▼</div>
 
         <div class="section">
-            <h2 class="section-title future-state">Future Modernization Plan</h2>
+            <h2 class="section-title future-state">Modernization Roadmap</h2>
             <div class="node-grid two-col">
-                <div class="node future-state"><h3>Infrastructure Upgrade Path</h3><ul><li><span class="label">Current OS:</span> <span class="value">Windows Server 2012 R2 (End-of-Support)</span></li><li><span class="label">Target OS:</span> <span class="value">Windows Server 2025</span></li><li><span class="label">Strategy:</span> <span class="value">Leverage Microsoft Server Migration Tools for phased, tested transition</span></li><li><span class="label">Timeline:</span> <span class="value">Q4 2025 - Q1 2026</span></li><li><span class="label">Benefits:</span> <span class="value">Advanced security features, improved performance, extended support lifecycle</span></li></ul></div>
-                <div class="node future-state"><h3>Additional Enhancements</h3><ul><li><span class="label">Cloud Integration:</span> <span class="value">Hybrid Azure setup for scalability</span></li><li><span class="label">Monitoring:</span> <span class="value">Implement Azure Monitor and Sentinel</span></li><li><span class="label">Automation:</span> <span class="value">PowerShell scripting for backups and DR</span></li><li><span class="label">Compliance:</span> <span class="value">Align with ISO 27001 and GDPR standards</span></li><li><span class="label">Cost Savings:</span> <span class="value">Optimized resource utilization</span></li></ul></div>
+                <div class="node future-state"><h3>Infrastructure Upgrade Plan</h3><ul><li><span class="label">Current OS:</span> <span class="value">Windows Server 2012 R2 (End-of-Support)</span></li><li><span class="label">Target OS:</span> <span class="value">Windows Server 2025</span></li><li><span class="label">Method:</span> <span class="value">Microsoft Server Migration Tools for phased, tested transition</span></li><li><span class="label">Timeline:</span> <span class="value">Q4 2025 - Q1 2026</span></li><li><span class="label">Benefits:</span> <span class="value">Advanced security features, improved performance, extended support lifecycle</span></li></ul></div>
+                <div class="node future-state"><h3>Enhancement Opportunities</h3><ul><li><span class="label">Cloud Integration:</span> <span class="value">Hybrid Azure setup for scalability</span></li><li><span class="label">Monitoring:</span> <span class="value">Azure Monitor and Sentinel implementation</span></li><li><span class="label">Automation:</span> <span class="value">PowerShell scripting for backups and DR</span></li><li><span class="label">Compliance:</span> <span class="value">ISO 27001 and GDPR alignment</span></li><li><span class="label">Optimization:</span> <span class="value">Resource utilization improvements</span></li></ul></div>
             </div>
         </div>
         
         <div class="arrow-connector">▼</div>
         
         <div class="section">
-            <h2 class="section-title appendix">Detailed Proposal Appendix</h2>
+            <h2 class="section-title appendix">Detailed Documentation</h2>
             
-            <button class="accordion-button">1. Current Infrastructure</button>
+            <button class="accordion-button">1. Current Infrastructure Details</button>
             <div class="panel">
-                <p>Our current setup comprises two mission-critical servers, each protected by hardware redundancy and multi-tiered backups to ensure operational integrity.</p>
+                <p>Our infrastructure consists of two mission-critical servers, each protected by hardware redundancy and multi-tiered backups to ensure operational integrity.</p>
                 <h4>SCCMAIN</h4>
                 <ul>
                     <li><strong>Functions:</strong> Active Directory for user authentication, Sage Pastel for financial management, and Email Storage for communications.</li>
-                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock) for fault tolerance.</li>
-                    <li><strong>Dependencies:</strong> Integrates with network services and client workstations.</li>
+                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock) providing fault tolerance.</li>
+                    <li><strong>Integration:</strong> Connected to network services and client workstations.</li>
                 </ul>
                 <h4>EYETHU1</h4>
                 <ul>
                     <li><strong>Functions:</strong> Point of Sale (POS) for transactions and Time Manager for employee scheduling.</li>
                     <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock) for data protection.</li>
-                    <li><strong>Dependencies:</strong> Connected to retail terminals and HR systems.</li>
+                    <li><strong>Integration:</strong> Connected to retail terminals and HR systems.</li>
                 </ul>
             </div>
 
-            <button class="accordion-button">2. Backup & Recovery Strategy</button>
+            <button class="accordion-button">2. Backup & Recovery Implementation</button>
             <div class="panel">
                 <h4>Primary Backup Method – Disk2VHD</h4>
                 <ul>
-                    <li><strong>Process:</strong> Creates full system images of SCCMAIN and EYETHU1, stored as .vhdx files on the IT PC’s hard drive, ready for Hyper-V deployment.</li>
+                    <li><strong>Process:</strong> Creates full system images of SCCMAIN and EYETHU1, stored as .vhdx files on the IT PC's hard drive, ready for Hyper-V deployment.</li>
                     <li><strong>Recovery Time (SCCMAIN):</strong> 2–3 hours data copy + 5 minutes launch in Hyper-V.</li>
                     <li><strong>Recovery Time (EYETHU1):</strong> 1 hour data copy + 5 minutes launch in Hyper-V.</li>
-                    <li><strong>Failover Plan:</strong> Quick resumption in Hyper-V; post-hours migration back to physical hardware.</li>
-                    <li><strong>Testing:</strong> Quarterly simulations to validate integrity.</li>
+                    <li><strong>Failover Process:</strong> Quick resumption in Hyper-V; post-hours migration back to physical hardware.</li>
+                    <li><strong>Testing Schedule:</strong> Quarterly simulations to validate integrity.</li>
                 </ul>
                 <h4>Secondary Backup Method – Veritas Backup</h4>
                 <ul>
-                    <li><strong>Role:</strong> Additional layer for system and file recovery.</li>
-                    <li><strong>Usage:</strong> Fallback if Disk2VHD unavailable.</li>
-                    <li><strong>Advantage:</strong> Granular restores and redundancy.</li>
+                    <li><strong>Function:</strong> Additional layer for system and file recovery.</li>
+                    <li><strong>Usage:</strong> Fallback when Disk2VHD unavailable.</li>
+                    <li><strong>Benefits:</strong> Granular restores and redundancy.</li>
                     <li><strong>Storage:</strong> Backed to NAS Synology with offsite mirroring for ultimate protection.</li>
                     <li><strong>Retention Policy:</strong> 30 days on-site, 90 days off-site.</li>
                 </ul>
             </div>
 
-            <button class="accordion-button">3. Disaster Recovery Benefits</button>
+            <button class="accordion-button">3. Disaster Recovery Capabilities</button>
             <div class="panel">
                  <ul>
                     <li><strong>Minimal Downtime:</strong> Hyper-V failover enables recovery in minutes after data transfer.</li>
@@ -365,34 +480,34 @@
                 </ul>
             </div>
             
-            <button class="accordion-button">4. Future Roadmap</button>
+            <button class="accordion-button">4. Modernization Plans</button>
             <div class="panel">
-                <h4>Server Upgrade</h4>
+                <h4>Server Upgrade Strategy</h4>
                 <ul>
                     <li><strong>Current State:</strong> Windows Server 2012 R2 – Approaching end-of-support.</li>
-                    <li><strong>Planned Path:</strong> Migration to Windows Server 2025 using Microsoft tools.</li>
+                    <li><strong>Migration Path:</strong> Transition to Windows Server 2025 using Microsoft tools.</li>
                     <li><strong>Testing:</strong> Ongoing in lab environment; full rollout post-validation.</li>
                     <li><strong>Benefits:</strong> Superior security (e.g., enhanced encryption), performance optimizations, and support until 2035.</li>
-                    <li><strong>Next Steps:</strong> Pilot migration Q4 2025; full deployment Q1 2026.</li>
+                    <li><strong>Implementation:</strong> Pilot migration Q4 2025; full deployment Q1 2026.</li>
                 </ul>
             </div>
 
-            <button class="accordion-button">5. Summary & Recommendations</button>
+            <button class="accordion-button">5. Current Status & Next Steps</button>
             <div class="panel">
-                <p>This plan provides a resilient framework for our infrastructure, combining immediate protection with strategic upgrades.</p>
+                <p>Our infrastructure provides a resilient framework with immediate protection and strategic upgrade planning.</p>
                 <ul>
-                    <li><strong>Immediate Actions:</strong> Conduct DR drill in Q4 2025.</li>
-                    <li><strong>Recommendations:</strong> Explore Azure Backup integration for hybrid cloud resilience.</li>
-                    <li><strong>Investment Justification:</strong> Reduces potential downtime costs (estimated $50K/hour) and ensures compliance.</li>
+                    <li><strong>Immediate Actions:</strong> DR drill scheduled for Q4 2025.</li>
+                    <li><strong>Considerations:</strong> Evaluating Azure Backup integration for hybrid cloud resilience.</li>
+                    <li><strong>Value Delivery:</strong> Reduces potential downtime costs and ensures compliance.</li>
                 </ul>
-                <p>For questions or further details, contact the IT Manager (Tahir).</p>
+                <p>For questions or additional information, contact the IT Manager (Tahir).</p>
             </div>
 
         </div>
     </div>
 
     <footer>
-        <p>Prepared for Superb Hyper Review | Confidential | As of September 20, 2025</p>
+        <p>Superb Hyper Infrastructure Documentation | Confidential | As of September 20, 2025</p>
     </footer>
 
     <script>
