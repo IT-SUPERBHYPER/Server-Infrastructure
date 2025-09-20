@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Server Infrastructure & Business Continuity Plan</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: #f4f7fa;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        padding: 40px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .header-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .header-title h1 {
+        font-size: 2.2em;
+        color: #1c3d5a;
+        margin-bottom: 5px;
+    }
+    .header-title p {
+        font-size: 1.1em;
+        color: #5a7b9a;
+        margin-top: 0;
+    }
+    .flowchart-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        width: 100%;
+        max-width: 1200px;
+    }
+    .section {
+        background-color: #ffffff;
+        border: 1px solid #dde6ed;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: #1c3d5a;
+        font-weight: 700;
+        font-size: 1.3em;
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #007bff;
+        display: flex;
+        align-items: center;
+    }
+    .section-title::before {
+        content: '■';
+        margin-right: 10px;
+        color: #007bff;
+    }
+    .node-grid {
+        display: grid;
+        gap: 20px;
+    }
+    .two-col { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .three-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .node {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-left: 4px solid #007bff;
+        border-radius: 6px;
+        padding: 20px;
+        transition: box-shadow 0.3s;
+    }
+    .node:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    .node h3 {
+        margin: 0 0 15px 0;
+        color: #1c3d5a;
+        font-size: 1.1em;
+    }
+    .node ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+        font-size: 0.95em;
+        color: #495057;
+    }
+    .node li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+    .label {
+        font-weight: 700;
+        color: #343a40;
+        display: inline-block;
+        width: 85px;
+    }
+    .value {
+        color: #5a7b9a;
+    }
+    .arrow-connector {
+        text-align: center;
+        font-size: 2em;
+        color: #adb5bd;
+    }
+    /* Specific Node Colors for Status/Type */
+    .backup-primary { border-left-color: #28a745; }
+    .backup-secondary { border-left-color: #ffc107; }
+    .dr-workflow { border-left-color: #dc3545; }
+    .future-state { border-left-color: #6f42c1; }
+    .appendix-section { border-left-color: #17a2b8; }
+    .section-title.appendix::before { color: #17a2b8; }
+
+
+    /* Accordion Styles */
+    .accordion-button {
+        background-color: #e9ecef;
+        color: #1c3d5a;
+        cursor: pointer;
+        padding: 15px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 1.1em;
+        font-weight: 700;
+        transition: background-color 0.3s;
+        border-radius: 5px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .accordion-button:hover {
+        background-color: #dde6ed;
+    }
+    .accordion-button::after {
+        content: '+';
+        font-size: 1.5em;
+        color: #007bff;
+    }
+    .accordion-button.active::after {
+        content: '−';
+    }
+    .panel {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        border-left: 1px solid #dde6ed;
+        border-right: 1px solid #dde6ed;
+        border-bottom: 1px solid #dde6ed;
+    }
+    .panel p, .panel ul {
+        font-size: 0.95em;
+        line-height: 1.6;
+        color: #495057;
+    }
+    .panel h4 {
+        color: #1c3d5a;
+        margin-top: 15px;
+    }
+    .panel ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1>Server Infrastructure & Business Continuity Plan</h1>
+        <p>A detailed overview of the current environment, recovery protocols, and future strategy.</p>
+    </div>
+
+    <div class="flowchart-container">
+        <div class="section">
+            <h2 class="section-title">Core Infrastructure Overview</h2>
+            <div class="node-grid two-col">
+                <div class="node"><h3>Server: SCCMAIN</h3><ul><li><span class="label">Role:</span> <span class="value">Primary Domain Controller</span></li><li><span class="label">Services:</span> <span class="value">Active Directory, Sage Pastel, Email</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li></ul></div>
+                <div class="node"><h3>Server: EYETHU1</h3><ul><li><span class="label">Role:</span> <span class="value">Line-of-Business Server</span></li><li><span class="label">Services:</span> <span class="value">Point of Sale (POS), Time Manager</span></li><li><span class="label">OS:</span> <span class="value">Windows Server 2012 R2</span></li><li><span class="label">Storage:</span> <span class="value">Hardware RAID 1 (IcyDock)</span></li></ul></div>
+            </div>
+        </div>
+        
+        <div class="arrow-connector">▼</div>
+        
+        <div class="section">
+            <h2 class="section-title">Data Protection Strategy</h2>
+            <div class="node-grid two-col">
+                <div class="node backup-primary"><h3>Primary Backup: Disk2VHD</h3><ul><li><span class="label">Method:</span> <span class="value">Bare-Metal System Imaging (P2V)</span></li><li><span class="label">Output:</span> <span class="value">Virtual Hard Disk (.vhdx)</span></li><li><span class="label">Purpose:</span> <span class="value">Rapid system virtualization for DR</span></li></ul></div>
+                <div class="node backup-secondary"><h3>Secondary Backup: Veritas</h3><ul><li><span class="label">Method:</span> <span class="value">System State & File-Level Backup</span></li><li><span class="label">Output:</span> <span class="value">Proprietary Backup Set</span></li><li><span class="label">Purpose:</span> <span class="value">Redundancy and granular restore</span></li></ul></div>
+            </div>
+        </div>
+
+        <div class="arrow-connector">▼</div>
+
+        <div class="section">
+            <h2 class="section-title dr-workflow">Disaster Recovery Protocol (Hardware Failure Scenario)</h2>
+            <div class="node-grid three-col">
+                <div class="node dr-workflow"><h3>Step 1: Failover Initiation</h3><ul><li><span class="label">Trigger:</span> <span class="value">Physical server outage confirmed.</span></li><li><span class="label">Action:</span> <span class="value">Copy latest .vhdx to Hyper-V host.</span></li><li><span class="label">Time Est:</span> <span class="value">1–3 hours</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 2: Service Restoration</h3><ul><li><span class="label">Platform:</span> <span class="value">Microsoft Hyper-V</span></li><li><span class="label">Action:</span> <span class="value">Launch new VM from .vhdx backup.</span></li><li><span class="label">Time Est:</span> <span class="value">< 5 minutes</span></li></ul></div>
+                <div class="node dr-workflow"><h3>Step 3: Failback Procedure</h3><ul><li><span class="label">Timing:</span> <span class="value">Post-business hours</span></li><li><span class="label">Action:</span> <span class="value">Migrate data from VM to repaired hardware.</span></li><li><span class="label">Goal:</span> <span class="value">Return to primary physical infrastructure.</span></li></ul></div>
+            </div>
+        </div>
+
+        <div class="arrow-connector">▼</div>
+
+        <div class="section">
+            <h2 class="section-title future-state">Future Modernization Plan</h2>
+            <div class="node-grid">
+                <div class="node future-state"><h3>Infrastructure Upgrade Path</h3><ul><li><span class="label">Current OS:</span> <span class="value">Windows Server 2012 R2 (End-of-Support)</span></li><li><span class="label">Target OS:</span> <span class="value">Windows Server 2025</span></li><li><span class="label">Strategy:</span> <span class="value">Utilize Microsoft Server Migration Tools for a tested and verified transition.</span></li><li><span class="label">Benefits:</span> <span class="value">Improved security, enhanced performance, and long-term vendor support.</span></li></ul></div>
+            </div>
+        </div>
+        
+        <div class="arrow-connector">▼</div>
+        
+        <div class="section">
+            <h2 class="section-title appendix">Detailed Proposal Appendix</h2>
+            
+            <button class="accordion-button">1. Current Infrastructure</button>
+            <div class="panel">
+                <p>Both servers are critical to daily business operations and are protected with multiple layers of backup and recovery options.</p>
+                <h4>SCCMAIN</h4>
+                <ul>
+                    <li><strong>Functions:</strong> Active Directory, Sage Pastel, and Email Storage</li>
+                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock)</li>
+                </ul>
+                <h4>EYETHU1</h4>
+                <ul>
+                    <li><strong>Functions:</strong> Point of Sale & Time Manager</li>
+                    <li><strong>Storage:</strong> Hardware RAID 1 (IcyDock)</li>
+                </ul>
+            </div>
+
+            <button class="accordion-button">2. Backup & Recovery Strategy</button>
+            <div class="panel">
+                <h4>Primary Backup Method – Disk2VHD</h4>
+                <ul>
+                    <li><strong>Process:</strong> Full system images of SCCMAIN and EYETHU1 are created using Disk2VHD. Backup files (.vhdx) are stored securely on the IT PC’s hard drive. Backups are ready to be mounted and run in Microsoft Hyper-V in the event of hardware failure.</li>
+                    <li><strong>Recovery Time (SCCMAIN):</strong> 2–3 hours to copy data + 5 minutes to launch in Hyper-V.</li>
+                    <li><strong>Recovery Time (EYETHU1):</strong> 1 hour to copy data + 5 minutes to launch in Hyper-V.</li>
+                    <li><strong>Failover Plan:</strong> If a physical server fails, operations are resumed quickly in Hyper-V using the latest .vhdx backup. After store closing, Hyper-V data is migrated back to a physical drive and restored to the original server hardware.</li>
+                </ul>
+                <h4>Secondary Backup Method – Veritas Backup</h4>
+                <ul>
+                    <li><strong>Role:</strong> Provides an additional safety net.</li>
+                    <li><strong>Usage:</strong> If the Disk2VHD process fails, Veritas Backup can be used to recover system data and files.</li>
+                    <li><strong>Advantage:</strong> Ensures business continuity through redundancy.</li>
+                </ul>
+            </div>
+
+            <button class="accordion-button">3. Disaster Recovery Benefits</button>
+            <div class="panel">
+                 <ul>
+                    <li><strong>Minimal Downtime:</strong> Failover to Hyper-V allows rapid recovery (within minutes once data is copied).</li>
+                    <li><strong>Redundancy:</strong> Dual backup systems (Disk2VHD + Veritas).</li>
+                    <li><strong>Flexibility:</strong> Backups are hypervisor-ready and can be restored to both virtual and physical environments.</li>
+                    <li><strong>Business Continuity:</strong> Ensures core services (Active Directory, Pastel, POS, Time Manager, and Email) remain operational with minimal interruption.</li>
+                </ul>
+            </div>
+            
+            <button class="accordion-button">4. Future Roadmap</button>
+            <div class="panel">
+                <h4>Server Upgrade</h4>
+                <ul>
+                    <li><strong>Current servers are running Windows Server 2012 R2.</strong></li>
+                    <li><strong>Planned upgrade path:</strong> Migration to Windows Server 2025.</li>
+                    <li><strong>Testing is underway</strong> using Microsoft’s built-in Server Migration Tools.</li>
+                    <li><strong>Benefits:</strong> Enhanced performance, stronger security, and longer support lifecycle.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion-button");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+    }
+</script>
+
+</body>
+</html>
